@@ -25,7 +25,11 @@ export default function MaxDrawdownCalculator() {
     }
 
     const calculationResult = calculateMaxDrawdown(peak, trough);
-    setResult(calculationResult);
+    // Ensure the result is of the correct type before setting state
+    setResult({
+      maxDrawdownAmount: calculationResult.maxDrawdownAmount.toString(),
+      maxDrawdownPercentage: calculationResult.maxDrawdownPercentage.toString()
+    });
     setChartData(generateDrawdownChartData(peak, trough));
   };
 
@@ -101,7 +105,7 @@ export default function MaxDrawdownCalculator() {
                       ]}
                     />
                     <CartesianGrid strokeDasharray="3 3" />
-                    <Tooltip formatter={(value) => [formatCurrency(value), 'Portfolio Value']} />
+                    <Tooltip formatter={(value) => [formatCurrency(value.toString()), 'Portfolio Value']} />
                     <Area 
                       type="monotone" 
                       dataKey="value" 
